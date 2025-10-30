@@ -1,0 +1,21 @@
+
+    Comparison:
+    - CT numerical (solve_ivp) integrates \dot{x} = A x and returns x(t) at requested t. Accuracy depends on tolerances;
+      it handles stiff/ill-conditioned cases with adaptive steps.
+    - CT analytic uses the continuous-time STM Φ(t, t0) = expm(A (t-t0)), giving the exact state at any t for LTI systems.
+    - DT analytic samples the exact CT solution at multiples of Δt by forming A_d = expm(A Δt) and x[k] = A_d^k x[0].
+      At the sample instants, this is mathematically identical to CT analytic.
+
+    Critical sampling:
+    Let λ = σ ± j ω_d be complex poles and ω_n = |λ| the undamped natural frequency. The Nyquist bound is
+        Δt_max = π / max ω_n.
+    For this system, max ω_n = 2 rad/s ⇒ Δt_max = π/2 ≈ 1.5708 s.
+
+    What happens if Δt > Δt_max?
+    - The discrete-time eigenangle is θ = ω_d Δt. Angles are wrapped modulo 2π in discrete time, producing an
+      aliased apparent frequency ω_alias = |ω_d − 2π/Δt · round(ω_d Δt / 2π)|.
+    - The DT trajectory x[k] = A_d^k x[0] is still the exact CT solution *at those sample instants*, but if you attempt to
+      infer the underlying oscillation from samples (or connect samples with lines), you will see a lower, incorrect
+      frequency (and possibly sign flips when θ ≈ π). Estimation and identification tasks will misinterpret the dynamics.
+    - Stability is preserved here because |e^{λ Δt}| = e^{σ Δt} < 1 (σ < 0), but phase is misrepresented beyond Nyquist.
+    

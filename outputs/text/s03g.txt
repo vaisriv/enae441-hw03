@@ -1,0 +1,8 @@
+For small perturbations, the STM linearization matches the nonlinear δr(t) closely: the
+direction and amplitude agree because the first-order model captures the local flow and gravity-gradient
+coupling along the nominal path. When the initial deviation is increased, higher-order terms (curvature of
+the vector field and coupling through 1/‖r‖^3) become significant over an orbital timescale. The STM keeps
+projecting the initial deviation through Φ(t,t0) built on the nominal, so its prediction grows biased: phase
+drifts and amplitude errors accumulate, especially near perigee where the field is most nonlinear.
+The plot shows divergence in ‖δr(t)‖: nonlinear truth departs from the linear prediction, evidencing the
+finite neighborhood of validity for the first-order model.

@@ -44,19 +44,19 @@
 
 	\hwkPart{} \label{hwk:s01a}
 
-	\inputminted{python}{./outputs/text/s01a.txt}
+	\inputminted[firstline=122, lastline=153]{python}{./src/hw03.py}
 
 	\hwkPart{} \label{hwk:s01b}
 
-	\inputminted{python}{./outputs/text/s01b.txt}
+	\inputminted[firstline=156, lastline=169]{python}{./src/hw03.py}
 
 	\hwkPart{} \label{hwk:s01c}
 
-	\inputminted{python}{./outputs/text/s01c.txt}
+	\inputminted[firstline=172, lastline=191]{python}{./src/hw03.py}
 
 	\hwkPart{} \label{hwk:s01d}
 
-	\inputminted{python}{./outputs/text/s01d.txt}
+	\inputminted[firstline=194, lastline=221]{python}{./src/hw03.py}
 
 	\hwkPart{} \label{hwk:s01e}
 
@@ -64,7 +64,7 @@
 
 	\hwkCode{} \label{code:s01}
 
-	See the \href{https://www.github.com/vaisriv/enae441-hw03/blob/main/src/hw03.py#L0}{Python code} for this assignment.
+	See the \href{https://www.github.com/vaisriv/enae441-hw03/blob/main/src/hw03.py#L118}{Python code} for this assignment.
 
 \end{hwkProblem}
 
@@ -92,11 +92,51 @@
 
 	\hwkPart{} \label{hwk:s02a}
 
-	Answer
+	With state \(x(t)=\left[\begin{array}{l}x(t) \\ \dot{x}(t)\end{array}\right]\) and output \(y(t)=x(t)\), the continuous-time model is
+
+	\[
+		\dot{x}(t)=\mathbf{A} x(t), \quad \mathbf{A}=\left[\begin{array}{cc}
+				0            & 1            \\
+				-\frac{k}{m} & -\frac{c}{m}
+			\end{array}\right]=\left[\begin{array}{cc}
+				0  & 1    \\
+				-4 & -0.5
+			\end{array}\right], \quad \mathbf{C}=\left[\begin{array}{ll}
+				1 & 0
+			\end{array}\right], \quad \mathbf{D}=\mathbf{0}
+	\]
+
+	For a sampling period \(\Delta t\), the discrete-time model (no input) is
+
+	\[
+		x_{k+1}=\mathbf{A}_d x_k, \quad y_k=\mathbf{C} x_k,
+	\]
+
+	with \(\mathbf{A}_d=e^{\mathbf{A} \Delta t}=\Phi(\Delta t)\)
+
+	Because this is a 2nd-order underdamped oscillator, it's convenient to write \(\alpha= \frac{c}{2 m}=\frac{1}{4}, \omega_n=\sqrt{k / m}=2\), and \(\omega_d=\omega_n \sqrt{1-\zeta^2}=2 \sqrt{1-\left(\frac{c}{2 m \omega_n}\right)^2}=\) 1.98431348.
+
+	The continuous-time STM is
+
+	\[
+		\Phi(t)=e^{-\alpha t}\left[\begin{array}{cc}
+				\cos{\omega_d t}+\frac{\alpha}{\omega_d} \sin{\omega_d t} & \frac{1}{\omega_d} \sin{\omega_d t}                       \\
+				-\frac{\omega_n^2}{\omega_d} \sin{\omega_d t}             & \cos{\omega_d t}-\frac{\alpha}{\omega_d} \sin{\omega_d t}
+			\end{array}\right]
+	\]
+
+	Hence the discrete state matrix is \(\mathbf{A}_d=\boldsymbol{\Phi}(\boldsymbol{\Delta} t)\) with the same \(\alpha, \omega_n, \omega_d\) substituted, and \(\mathbf{C}_d=\mathbf{C}, \mathbf{D}_d=\mathbf{D}=\mathbf{0}\)
+	
+	\pagebreak
 
 	\hwkPart{} \label{hwk:s02b}
 
-	\inputminted{python}{./outputs/text/s02b.txt}
+	\begin{figure}[H] \label{fig:s02b}
+		\begin{center}
+			\includegraphics[width=0.45\textwidth]{./outputs/figures/s02b.png}
+		\end{center}
+		\caption{Propagation Trajectories}
+	\end{figure}
 
 	\hwkPart{} \label{hwk:s02c}
 
@@ -112,7 +152,7 @@
 
 	\hwkCode{} \label{code:s02}
 
-	See the \href{https://www.github.com/vaisriv/enae441-hw03/blob/main/src/hw03.py#L0}{Python code} for this assignment.
+	See the \href{https://www.github.com/vaisriv/enae441-hw03/blob/main/src/hw03.py#L234}{Python code} for this assignment.
 
 \end{hwkProblem}
 
@@ -126,13 +166,13 @@
 	The initial position and velocity vectors are:
 	\[
 		{}^{\mathcal{N}} \fn*{\boldsymbol{X}}[0]=\left[\begin{array}{c}
-				\qty{7000}{\km} \\
-				\qty{0.0}{\km} \\
-				\qty{0.0}{\km} \\
+				\qty{7000}{\km}      \\
+				\qty{0.0}{\km}       \\
+				\qty{0.0}{\km}       \\
 				\qty{0.0}{\km\per\s} \\
 				\qty{7.5}{\km\per\s} \\
 				\qty{3.5}{\km\per\s}
-		\end{array}\right]^{\top}
+			\end{array}\right]^{\top}
 	\]
 	and the measurement function of the system is the range, \(\rho\) taken from an observer at \(\phi=\qty{30}{\deg}\) latitude and \(\lambda=\qty{60}{\deg}\) longitude, where the radius of the Earth, \(R_E\) is taken as \qty{6378}{\km} and the rotation of the Earth is \(\omega_{E / N}=\qty{7.2921150e-5}{\rad\per\s}\). Define the state vector as \(\fn*{\boldsymbol{x}}[t]={\rbvect{\fn*{\boldsymbol{r}}[t]}{\fn*{\boldsymbol{v}}[t]}}^{\top}\).
 
@@ -152,7 +192,50 @@
 
 	\hwkPart{} \label{hwk:s03a}
 
-	Answer
+	State: \(\boldsymbol{x}=[\boldsymbol{r} ; \boldsymbol{v}] \in \mathbb{R}^6\), dynamics
+
+	\[
+		\dot{x}=\left[\begin{array}{l}
+				\dot{r} \\
+				\dot{v}
+				\end{array}\right]=\left[\begin{array}{c}
+				v \\
+				-\frac{\mu}{\|r\|^3} r
+		\end{array}\right]=: f(x)
+	\]
+
+	Let \(r=\|\boldsymbol{r}\|\). The Jacobian is
+
+	\[
+		\mathbf{A}=\frac{\partial f}{\partial x}=\left[\begin{array}{cc}
+				\mathbf{0}_{3 \times 3} & \mathbf{I}_{3 \times 3} \\
+				\mu\left(\frac{3 r r^{\top}}{r^5}-\frac{\mathbf{I}_{3 \times 3}}{r^3}\right) & \mathbf{0}_{3 \times 3}
+		\end{array}\right]
+	\]
+
+	Measurement: range to a ground observer \(\rho=\left\|\boldsymbol{r}-\boldsymbol{r}_{\text {obs }}(\boldsymbol{t})\right\|\)
+
+	Hence
+
+	\[
+		\mathbf{C}=\frac{\partial \rho}{\partial x}=\left[\begin{array}{ll}
+				\frac{\left(r-r_{\text{obs}}(t)\right)^{\top}}{\left\|r-r_{\text{obs}}(t)\right\|} & \mathbf{0}_{1 \times 3}
+		\end{array}\right]
+	\]
+
+	The observer position in ECI (with latitude \(\phi\), longitude \(\lambda\), Earth radius \(R_E\), rotation rate \(\omega_E\) ) is
+
+	\[
+		r_{\text{obs}}^{\mathrm{ECI}}(t)=\mathbf{R}_3\left(\omega_E t\right)\left[\begin{array}{c}
+				R_E \cos{\phi} \cos{\lambda}\\
+				R_E \cos{\phi} \sin{\lambda}\\
+				R_E \sin{\phi}
+				\end{array}\right], \quad \mathbf{R}_3(\theta)=\left[\begin{array}{ccc}
+				\cos{\theta} & -\sin{\theta} & 0 \\
+				\sin{\theta} &  \cos{\theta} & 0 \\
+				0 & 0 & 1
+		\end{array}\right]
+	\]
 
 	\hwkPart{} \label{hwk:s03b}
 
@@ -162,17 +245,34 @@
 
 	\inputminted{python}{./outputs/text/s03c.txt}
 
+	\pagebreak
+
 	\hwkPart{} \label{hwk:s03d}
 
-	\inputminted{python}{./outputs/text/s03d.txt}
+	\begin{figure}[H] \label{fig:s03d}
+		\begin{center}
+			\includegraphics[width=0.45\textwidth]{./outputs/figures/s03d.png}
+		\end{center}
+		\caption{Numerical Integration \( \mathrm{d}\bm{X} \)}
+	\end{figure}
 
 	\hwkPart{} \label{hwk:s03e}
 
-	\inputminted{python}{./outputs/text/s03e.txt}
+	\begin{figure}[H] \label{fig:s03e}
+		\begin{center}
+			\includegraphics[width=0.45\textwidth]{./outputs/figures/s03e.png}
+		\end{center}
+		\caption{Analytic Integration \( \mathrm{d}\bm{X} \)}
+	\end{figure}
 
 	\hwkPart{} \label{hwk:s03f}
 
-	\inputminted{python}{./outputs/text/s03f.txt}
+	\begin{figure}[H] \label{fig:s03f}
+		\begin{center}
+			\includegraphics[width=0.45\textwidth]{./outputs/figures/s03f.png}
+		\end{center}
+		\caption{Critical \( \mathrm{d}\bm{X}_{\text{neighborhood}} \)}
+	\end{figure}
 
 	\hwkPart{} \label{hwk:s03g}
 
@@ -188,7 +288,7 @@
 
 	\hwkCode{} \label{code:s03}
 
-	See the \href{https://www.github.com/vaisriv/enae441-hw03/blob/main/src/hw03.py#L0}{Python code} for this assignment.
+	See the \href{https://www.github.com/vaisriv/enae441-hw03/blob/main/src/hw03.py#L347}{Python code} for this assignment.
 
 \end{hwkProblem}
 

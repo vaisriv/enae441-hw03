@@ -1,0 +1,10 @@
+
+        2 measurements (e.g., at k=0 and k=1 with Δt=1 s) are sufficient.
+        Reason: the 2×2 observability matrix O₂ = [ C ; C A_d ] equals
+            [[1, 0],
+             [Φ₁₁(Δt), Φ₁₂(Δt)]],
+        which has full rank iff Φ₁₂(Δt) ≠ 0. For this system,
+            Φ₁₂(Δt) = e^(-α Δt) · (1/ω_d) · sin(ω_d Δt),
+        and with α=0.25, ω_d≈1.9843 rad/s, Δt=1 s ⇒ sin(ω_d Δt) ≠ 0, so rank(O₂)=2.
+        Thus the discrete-time state is observable from two consecutive position measurements.
+    

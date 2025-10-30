@@ -1,0 +1,7 @@
+We linearize the range model about the nominal: y_k = ρ(r_k) with r_k ≈ r_nom,k + δr_k,
+δX_k = Φ_k δX0. The measurement Jacobian is C_k = [ (r_nom,k − r_obs,k)^T / ρ_nom,k , 0_{1×3} ].
+Thus y_k − ρ_nom,k ≈ (C_k Φ_k) δX0. Stacking all samples yields a linear least-squares problem:
+min_δX0 || y_res − H δX0 ||₂, where rows of H are C_k Φ_k. We integrate once along the nominal
+and its STM to get X_nom(t_k), Φ_k, build H and the residual vector y_res, then solve with
+np.linalg.lstsq. This provides the best linearized estimate of the initial deviation δX0 given
+range-only data and the chosen nominal trajectory.
